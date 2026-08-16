@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>[CLASSIFIED]</title>
+<style>
+  .container{max-width:360px;margin:40px auto;font-family:sans-serif}
+  input[type="password"],input[type="text"]{width:100%;padding:8px;margin:8px 0;box-sizing:border-box}
+  button{padding:8px 12px;margin-right:6px}
+  .message{margin-top:8px;font-weight:600}
+  .success{color:green}.error{color:red}
+  .secret{display:none;margin-top:12px;padding:10px;background:#e8ffe8;border:1px solid #7cfc7c}
+</style>
+</head>
+<body>
+  <div class="container">
+    <label for="pw">Enter password:</label>
+    <input id="pw" type="password" autocomplete="off" />
+    <div>
+      <button id="check">Check</button>
+      <button id="toggle" type="button">Show</button>
+    </div>
+    <div id="msg" class="message" aria-live="polite"></div>
+    <div id="secret" class="secret"><a href="terminal-home.html">[ACCESS GRANTED]</a></div>
+  </div>
+
+  <script>
+    const expected = 'FAK-03820'; // change to the specific password you want
+    const pw = document.getElementById('pw');
+    const check = document.getElementById('check');
+    const toggle = document.getElementById('toggle');
+    const msg = document.getElementById('msg');
+    const secret = document.getElementById('secret');
+
+    check.addEventListener('click', () => {
+      if (pw.value === expected) {
+        msg.textContent = '[GRANTED]';
+        msg.className = 'message success';
+        secret.style.display = 'block';
+      } else {
+        msg.textContent = 'Password incorrect.';
+        msg.className = 'message error';
+        secret.style.display = 'none';
+      }
+    });
+
+    toggle.addEventListener('click', () => {
+      if (pw.type === 'password') { pw.type = 'text'; toggle.textContent = 'Hide'; }
+      else { pw.type = 'password'; toggle.textContent = 'Show'; }
+    });
+
+    pw.addEventListener('keydown', e => { if (e.key === 'Enter') check.click(); });
+  </script>
+</body>
+</html>
